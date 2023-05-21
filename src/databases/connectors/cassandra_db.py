@@ -16,14 +16,13 @@ class CassandraConnector(DatabaseConnector):
             contact_points: A list of contact points for the Cassandra cluster.
         """
         self.contact_points = contact_points
-        self.cluster = None
+        self.cluster = Cluster(contact_points=self.contact_points)
         self.session = None
 
     def connect(self):
         """
         Connect to the Cassandra database.
         """
-        self.cluster = Cluster(contact_points=self.contact_points)
         self.session = self.cluster.connect()
 
     def disconnect(self):

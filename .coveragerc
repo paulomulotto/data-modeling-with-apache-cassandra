@@ -2,3 +2,5 @@
 source = ./src
 omit =
     *site-packages*
+    *test*
+    */tests/*

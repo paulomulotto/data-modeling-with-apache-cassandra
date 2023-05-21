@@ -1,8 +1,6 @@
 import os
 import unittest
-import pandas as pd
 from src.files.readers.csv_reader import CSVReader
-from src.files.readers.validators.rules import NotNullOrEmptyRule
 
 
 class TestCSVReader(unittest.TestCase):
@@ -42,14 +40,24 @@ class TestCSVReader(unittest.TestCase):
         """
         self.assertEqual(self.csv_reader.get_data_length(), 2)
         self.assertEqual(len(self.csv_reader.get_data()), 2)
-        self.assertEqual(self.csv_reader.get_data().iloc[0].tolist(), [1, "John", 25])  # Assert that the first line of data was read correctly
-        self.assertEqual(self.csv_reader.get_data().iloc[1].tolist(), [2, "Jane", 30])  # Assert that the second line of data was read correctly
+        # Assert that the first line of data was read correctly
+        self.assertEqual(
+            self.csv_reader.get_data().iloc[0].tolist(),
+            [1, "John", 25]
+        )
+        # Assert that the second line of data was read correctly
+        self.assertEqual(
+            self.csv_reader.get_data().iloc[1].tolist(),
+            [2, "Jane", 30]
+        )
 
     def test_invalid_file(self):
         """
         Test reading an invalid file.
         """
-        with self.assertRaises(FileNotFoundError):  # Assert that a FileNotFoundError is raised when trying to read an invalid file
+        # Assert that a FileNotFoundError is raised when
+        # trying to read an invalid file
+        with self.assertRaises(FileNotFoundError):
             self.csv_reader.read_file('invalid.csv')
 
     def test_empty_file(self):
@@ -64,7 +72,8 @@ class TestCSVReader(unittest.TestCase):
         Test reading a file with no data, only containing the header.
         """
         csv_reader = CSVReader([self.header_only_file])
-        self.assertTrue(csv_reader.get_data().empty)  # Assert that the DataFrame is empty
+        # Assert that the DataFrame is empty
+        self.assertTrue(csv_reader.get_data().empty)
 
     def test_nonexistent_file(self):
         """
@@ -73,6 +82,18 @@ class TestCSVReader(unittest.TestCase):
         nonexistent_file = 'nonexistent.csv'
         with self.assertRaises(FileNotFoundError):
             self.csv_reader.read_file(nonexistent_file)
+
+    def test_apply_filter(self):
+        """
+        Test applying a filter to remove rows from the data DataFrame.
+        """
+        # Apply a filter to keep only rows where the 'name' column is 'John'
+        self.csv_reader.apply_filter(lambda row: row['name'] == 'John')
+
+        # Assert that the DataFrame contains only the filtered rows
+        filtered_data = self.csv_reader.get_data()
+        self.assertEqual(len(filtered_data), 1)
+        self.assertEqual(filtered_data.iloc[0].tolist(), [1, 'John', 25])
 
 
 if __name__ == '__main__':
