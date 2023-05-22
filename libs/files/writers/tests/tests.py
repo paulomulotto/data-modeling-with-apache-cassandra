@@ -2,7 +2,7 @@ import unittest
 import os
 import pandas as pd
 from unittest.mock import patch
-from src.files.writers.csv import CSVWriter
+from libs.files.writers.csv import CSVWriter
 
 
 class TestCSVWriter(unittest.TestCase):

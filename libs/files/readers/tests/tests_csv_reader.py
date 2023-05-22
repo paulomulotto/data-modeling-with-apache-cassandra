@@ -1,6 +1,6 @@
 import os
 import unittest
-from src.files.readers.csv_reader import CSVReader
+from libs.files.readers.csv_reader import CSVReader
 
 
 class TestCSVReader(unittest.TestCase):

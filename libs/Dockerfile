@@ -12,6 +12,8 @@ COPY requirements.txt .
 # Install any dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+COPY . /app/libs/
+
 # Open port 8888 for the Notebook
 EXPOSE 8888
 

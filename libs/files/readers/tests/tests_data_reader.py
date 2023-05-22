@@ -1,6 +1,5 @@
 import unittest
-from unittest.mock import MagicMock
-from src.files.readers.csv_reader import BaseReader
+from libs.files.readers.csv_reader import BaseReader
 
 
 class TestDataReaders(unittest.TestCase):

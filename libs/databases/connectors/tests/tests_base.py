@@ -1,5 +1,5 @@
 import unittest
-from src.databases.connectors.base import DatabaseConnector
+from libs.databases.connectors.base import DatabaseConnector
 from abc import ABC
 
 

@@ -1,5 +1,5 @@
 [run]
-source = ./src
+source = ./libs
 omit =
     *site-packages*
     *test*

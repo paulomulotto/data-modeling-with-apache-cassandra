@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import Mock
 from cassandra.cluster import Cluster
 import pandas as pd
-from src.databases.connectors.cassandra_db import CassandraConnector
+from libs.databases.connectors.cassandra_db import CassandraConnector
 
 
 class TestCassandraConnector(unittest.TestCase):

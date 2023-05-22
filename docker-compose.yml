@@ -7,11 +7,11 @@ services:
       - "9042:9042"
 
   notebook:
-    build: .
+    build: ./libs
     volumes:
-      - ../notebooks/:/app
-      - ../data/:/app/data
-      - ../src/:/app/src
+      - ./notebooks/:/app
+      - ./data/:/data
+      - ./libs/:/app/libs
     ports:
       - "8888:8888"
     links:

@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from src.files.collector import FileCollector
+from libs.files.collector import FileCollector
 
 
 class TestFileCollector(unittest.TestCase):

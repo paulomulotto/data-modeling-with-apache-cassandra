@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from src.files.readers.base_reader import BaseReader
+from libs.files.readers.base_reader import BaseReader
 
 
 class CSVReader(BaseReader):
