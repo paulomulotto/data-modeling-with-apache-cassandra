@@ -47,7 +47,8 @@ class CassandraTableManager(BaseTableManager):
         self.connector.set_keyspace(self.keyspace)
 
     def create_table(self, table_name: str, columns: Dict[str, str],
-                     primary_key: List[str]) -> None:
+                     partition_key: List[str], clustering_key: List[str]
+                     ) -> None:
         """
         Create a table in Cassandra.
 
@@ -56,8 +57,10 @@ class CassandraTableManager(BaseTableManager):
             columns: A dictionary of column names and their data types.
                      Key: The column name.
                      Value: The data type of the column.
-            primary_key (List[str]): The list of column names that form
-                                     the primary key.
+            partition_key List[str]:
+                    List of primary key columns
+            clustering_key List[str]:
+                    List of clustering key columns
 
         Returns:
             None.
@@ -67,14 +70,41 @@ class CassandraTableManager(BaseTableManager):
             for name, data_type in columns.items()
         )
 
-        primary_key_str = ', '.join(primary_key)
-
         query = (
             f"CREATE TABLE IF NOT EXISTS {table_name} "
-            f"({column_defs}, PRIMARY KEY ({primary_key_str}))"
+            f"({column_defs}, "
+            f"{self._build_primary_key_str(partition_key, clustering_key)})"
         )
 
         self.connector.session.execute(query)
+
+    def _build_primary_key_str(self, partition_key: List[str],
+                               clustering_key: List[str]) -> str:
+        """
+        Build the primary key string.
+
+        Args:
+            partition_key List[str]:
+                    List of primary key columns
+            clustering_key List[str]:
+                    List of clustering key columns
+
+        Returns:
+            str: The primary key string.
+        """
+
+        partition_key = f"{', '.join(partition_key)}"
+
+        has_clustering_key = len(clustering_key) > 0
+        if has_clustering_key:
+            clustering_key = f"{', '.join(clustering_key)}"
+
+        primary_key_str = "PRIMARY KEY (" + (
+            f"({partition_key}), {clustering_key}" if has_clustering_key
+            else partition_key
+        ) + ")"
+
+        return primary_key_str
 
     def insert_data(self, table_name: str, data: List[Dict[str, Any]]) -> None:
         """
