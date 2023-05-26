@@ -9,9 +9,7 @@ services:
   notebook:
     build: ./libs
     volumes:
-      - ./notebooks/:/app
-      - ./data/:/data
-      - ./libs/:/app/libs
+      - ./:/app
     ports:
       - "8888:8888"
     links:

@@ -1,4 +1,6 @@
-jupyter
-cassandra-driver
-pandas
-numpy
+jupyter==1.0.0
+cassandra-driver==3.27.0
+pandas==2.0.1
+numpy==1.24.3
+coverage==7.2.6
+flake8==6.0.0
