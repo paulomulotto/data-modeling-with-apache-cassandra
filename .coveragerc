@@ -3,4 +3,6 @@ source = ./libs
 omit =
     *site-packages*
     *test*
+    .venv
     */tests/*
+    *.csv
