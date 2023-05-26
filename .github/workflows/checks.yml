@@ -12,3 +12,5 @@
             uses: actions/checkout@v2
           - name: Test
             run: docker-compose run --rm notebook sh -c "python3 -m coverage run --rcfile=.coveragerc -m unittest discover && coverage report && coverage html"
+          - name: Lint
+            run: docker-compose run --rm notebook sh -c "flake8"

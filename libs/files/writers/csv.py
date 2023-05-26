@@ -14,18 +14,21 @@ class CSVWriter(BaseWriter):
 
         :param encoding: The encoding of the CSV file (default is 'utf8').
         :param sep: The separator to use in the CSV file (default is ',').
-        :param **kwargs: Additional keyword arguments to pass to the pandas to_csv function.
+        :param **kwargs: Additional keyword arguments to pass to the pandas
+                            to_csv function.
         """
         super().__init__(encoding=encoding)
         self.sep = sep
 
-    def write_data(self, file_path: str, data: pd.DataFrame, columns: list[str] = None) -> None:
+    def write_data(self, file_path: str, data: pd.DataFrame,
+                   columns: list[str] = None) -> None:
         """
         Write data to the CSV file.
 
         :param file_path: The path of the CSV file to write.
         :param data: The data rows to write as a pandas DataFrame.
-        :param columns: The columns to include in the output (default is None, which includes all columns).
+        :param columns: The columns to include in the output
+                        (default is None, which includes all columns).
         """
         directory = os.path.dirname(file_path)
         os.makedirs(directory, exist_ok=True)
@@ -33,5 +36,6 @@ class CSVWriter(BaseWriter):
         if columns is not None:
             data = data[columns]
 
-        data.to_csv(file_path, sep=self.sep, index=False, encoding=self.encoding)
+        data.to_csv(file_path, sep=self.sep,
+                    index=False, encoding=self.encoding)
         return data

@@ -122,7 +122,11 @@ class CassandraTableManager(BaseTableManager):
         """
         column_names = data[0].keys()
         placeholders = ', '.join(['?' for _ in column_names])
-        prepared_query = f"INSERT INTO {table_name} ({', '.join(column_names)}) VALUES ({placeholders})"
+        prepared_query = (
+            f"INSERT INTO {table_name} "
+            f"({', '.join(column_names)}) "
+            f"VALUES ({placeholders})"
+        )
 
         prepared_statement = self.connector.session.prepare(prepared_query)
 
